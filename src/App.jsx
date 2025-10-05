@@ -24,6 +24,7 @@ import DashboardPage from './pages/DashboardPage';
 import Header from './components/Header';
 import NotFound from './components/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 
 // Styles
 import GlobalStyles from './styles/GlobalStyles';
@@ -76,17 +77,17 @@ function App() {
                 <Route 
                   path="/admin" 
                   element={
-                    <ProtectedRoute>
+                    <AdminRoute>
                       <AdminPage />
-                    </ProtectedRoute>
+                    </AdminRoute>
                   } 
                 />
                 <Route 
                   path="/submissions" 
                   element={
-                    <ProtectedRoute>
+                    <AdminRoute>
                       <SubmissionsPage />
-                    </ProtectedRoute>
+                    </AdminRoute>
                   } 
                 />
                 

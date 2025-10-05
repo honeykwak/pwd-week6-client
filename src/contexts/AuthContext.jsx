@@ -77,6 +77,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // 관리자 권한 확인 함수
+  const isAdmin = () => {
+    return user && user.userType === 'admin';
+  };
+
   const value = {
     user,
     isAuthenticated,
@@ -85,6 +90,7 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     checkAuthStatus,
+    isAdmin,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

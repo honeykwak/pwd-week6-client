@@ -10,9 +10,9 @@ const getEnvironmentConfig = () => {
       clientUrl: 'http://localhost:5173',
     },
     production: {
-      // 배포 후 실제 URL로 변경 필요
-      apiUrl: import.meta.env.VITE_API_URL || 'https://pwd-week6-server.onrender.com',
-      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://pwd-week6-client.vercel.app',
+      // 환경변수에서 URL 가져오기, 없으면 기본값 사용
+      apiUrl: import.meta.env.VITE_API_URL || 'https://your-server-domain.com',
+      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://your-client-domain.com',
     }
   };
 

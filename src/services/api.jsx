@@ -28,7 +28,12 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error('API error:', error.response?.data || error.message);
+    // 서버에서 온 에러 메시지가 있으면 사용, 없으면 기본 메시지
+    const errorMessage = error.response?.data?.message || error.message || '네트워크 오류가 발생했습니다.';
+    console.error('API error:', errorMessage);
+    
+    // 에러 객체에 사용자 친화적인 메시지 추가
+    error.userMessage = errorMessage;
     return Promise.reject(error);
   }
 );

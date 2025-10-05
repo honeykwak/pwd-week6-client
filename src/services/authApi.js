@@ -30,6 +30,17 @@ export const authAPIService = {
   // OAuth 로그인 URL 생성
   getGoogleLoginUrl: () => `${API_BASE_URL}/api/auth/google`,
   getNaverLoginUrl: () => `${API_BASE_URL}/api/auth/naver`,
+
+  // 관리자 전용 API
+  // 모든 사용자 목록 조회
+  getAllUsers: async () => {
+    return await api.get('/api/users/all');
+  },
+
+  // 사용자 유형 변경
+  changeUserType: async (userId, userType) => {
+    return await api.put(`/api/users/${userId}/type`, { userType });
+  },
 };
 
 // 기존 api 인스턴스를 authAPI로도 내보내기 (하위 호환성)

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { FaUser, FaEnvelope, FaCalendarAlt, FaShieldAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaCalendarAlt, FaShieldAlt, FaSignOutAlt, FaCog, FaClipboardList } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
 
@@ -87,6 +87,8 @@ const ProviderBadge = styled.span`
         return '#db4437';
       case 'naver':
         return '#03c75a';
+      case 'admin':
+        return '#ff6b35';
       default:
         return '#667eea';
     }
@@ -159,7 +161,7 @@ const AvatarPlaceholder = styled.div`
 `;
 
 function DashboardPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -237,6 +239,16 @@ function DashboardPage() {
           </InfoRow>
           
           <InfoRow>
+            <FaShieldAlt />
+            <InfoLabel>사용자 유형:</InfoLabel>
+            <InfoValue>
+              <ProviderBadge provider={user.userType === 'admin' ? 'admin' : 'user'}>
+                {user.userType === 'admin' ? '관리자' : '일반 사용자'}
+              </ProviderBadge>
+            </InfoValue>
+          </InfoRow>
+          
+          <InfoRow>
             <FaCalendarAlt />
             <InfoLabel>가입일:</InfoLabel>
             <InfoValue>{formatDate(user.createdAt)}</InfoValue>
@@ -257,6 +269,24 @@ function DashboardPage() {
           >
             맛집 제보하기
           </ActionButton>
+          
+          {isAdmin() && (
+            <>
+              <ActionButton 
+                className="primary"
+                onClick={() => navigate('/admin')}
+              >
+                <FaCog /> 관리자 페이지
+              </ActionButton>
+              
+              <ActionButton 
+                className="primary"
+                onClick={() => navigate('/submissions')}
+              >
+                <FaClipboardList /> 제출 관리
+              </ActionButton>
+            </>
+          )}
           
           <ActionButton 
             className="danger"
