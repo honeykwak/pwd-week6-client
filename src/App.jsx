@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import { testConnection } from './utils/connectionTest';
 
 // Context
 import { AuthProvider } from './contexts/AuthContext';
@@ -40,6 +41,11 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  // 앱 시작 시 연결 테스트
+  useEffect(() => {
+    testConnection();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>

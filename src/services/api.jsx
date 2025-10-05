@@ -19,7 +19,7 @@ const publicApi = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    console.log('API request:', config.method?.toUpperCase(), config.url);
+    console.log('API request:', config.method?.toUpperCase(), `${config.baseURL}${config.url}`);
     return config;
   },
   (error) => Promise.reject(error)

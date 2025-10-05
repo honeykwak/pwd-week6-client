@@ -11,8 +11,8 @@ const getEnvironmentConfig = () => {
     },
     production: {
       // 환경변수에서 URL 가져오기, 없으면 기본값 사용
-      apiUrl: import.meta.env.VITE_API_URL || 'https://pwd-week6-client.vercel.app',
-      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://pwd-week6-server.onrender.com',
+      apiUrl: import.meta.env.VITE_API_URL || 'https://pwd-week6-server.onrender.com',
+      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://pwd-week6-client.vercel.app',
     }
   };
 
@@ -42,5 +42,8 @@ console.log('🌍 Environment Config:', {
   mode: import.meta.env.MODE,
   dev: import.meta.env.DEV,
   prod: import.meta.env.PROD,
-  config: env
+  apiUrl: env.apiUrl,
+  clientUrl: env.clientUrl,
+  viteApiUrl: import.meta.env.VITE_API_URL,
+  viteClientUrl: import.meta.env.VITE_CLIENT_URL
 });
