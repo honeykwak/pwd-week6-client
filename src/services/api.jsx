@@ -10,6 +10,13 @@ const api = axios.create({
   timeout: 10000,
 });
 
+// 공개 조회 전용 인스턴스: 교차 출처 시 자격증명(쿠키) 제외
+const publicApi = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: false,
+  timeout: 10000,
+});
+
 api.interceptors.request.use(
   (config) => {
     console.log('API request:', config.method?.toUpperCase(), config.url);
@@ -28,7 +35,7 @@ api.interceptors.response.use(
 
 export const restaurantAPI = {
   getRestaurants: async () => {
-    const response = await api.get('/api/restaurants');
+    const response = await publicApi.get('/api/restaurants', { withCredentials: false });
     return response.data;
   },
 
@@ -48,12 +55,12 @@ export const restaurantAPI = {
   },
 
   getRestaurantById: async (id) => {
-    const response = await api.get(`/api/restaurants/${id}`);
+    const response = await publicApi.get(`/api/restaurants/${id}`, { withCredentials: false });
     return response.data;
   },
 
   getPopularRestaurants: async () => {
-    const response = await api.get('/api/restaurants/popular');
+    const response = await publicApi.get('/api/restaurants/popular', { withCredentials: false });
     return response.data;
   },
 };
