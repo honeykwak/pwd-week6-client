@@ -29,6 +29,7 @@ export const authAPIService = {
 
   // OAuth 로그인 URL 생성
   getGoogleLoginUrl: () => `${API_BASE_URL}/api/auth/google`,
+  getNaverLoginUrl: () => `${API_BASE_URL}/api/auth/naver`,
 };
 
 // 기존 api 인스턴스를 authAPI로도 내보내기 (하위 호환성)

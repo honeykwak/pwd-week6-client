@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { SiNaver } from 'react-icons/si';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
@@ -151,6 +152,13 @@ const SocialButton = styled.a`
     &:hover {
       border-color: #db4437;
       background: #fff5f5;
+    }
+  }
+  
+  &.naver {
+    &:hover {
+      border-color: #03c75a;
+      background: #f0f9f0;
     }
   }
   
@@ -317,6 +325,10 @@ function RegisterPage() {
 
       <SocialButton href={authAPIService.getGoogleLoginUrl()} className="google">
         <FaGoogle /> 구글로 가입
+      </SocialButton>
+
+      <SocialButton href={authAPIService.getNaverLoginUrl()} className="naver">
+        <SiNaver /> 네이버로 가입
       </SocialButton>
 
       <LinkText>
