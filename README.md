@@ -1,8 +1,25 @@
-# 📚 PWD Week 3 - React와 Netlify로 만드는 Ajou Campus Foodmap
+# 📚 PWD Week 6 - Ajou Campus Foodmap Client
 
-> **실용 웹 개발 3주차**: React의 핵심 개념을 학습하고, 실제 작동하는 웹 서비스를 Netlify에 배포합니다.
-## 📋 강의 자료
-- [3주차 강의자료](https://drive.google.com/file/d/1EXfyxPi06jV5YWpDnW5Upiwt3Xv8j2Ec/view?usp=drive_link)
+본 문서는 Ajou Campus Foodmap 클라이언트의 전체 개발 과정을 한 곳에 정리합니다. 기획 → 환경 준비 → 구현 → 테스트 → 배포까지 순서대로 따라오면 됩니다.
+
+## 🧭 개발 전 과정 한눈에 보기
+- 0) 목표 정의: 아주대 주변 맛집 탐색/제보 서비스의 클라이언트 구현 및 서버 연동
+- 1) 개발 환경 준비: Node/npm, Git, (선택) 로컬 MongoDB 또는 MongoDB Atlas
+- 2) 레포 구성: `pwd-week6-client`(Vite React), `pwd-week6-server`(Express) 분리
+- 3) 환경 변수 구성: 클라이언트(`VITE_API_URL`, `VITE_CLIENT_URL`), 서버(`MONGODB_URI`, `CLIENT_URL`, `SESSION_SECRET` 등)
+- 4) 로컬 기동: 서버(5000) → 클라이언트(5173) 순서로 실행, `/health` 및 페이지 확인
+- 5) 핵심 기능 구현: 라우팅·보호 라우트·인증(세션)·OAuth·목록/상세/인기/제보·상태관리(React Query, Context)
+- 6) 통합 테스트: 회원가입/로그인/세션, 보호 라우트, 데이터 CRUD, CORS/쿠키 확인
+- 7) 배포: Vercel(클라) + Render(서버), 환경변수에 상호 도메인 반영
+- 8) 운영: 로그/모니터링, OAuth 콘솔 설정, 보안(HTTPS, SameSite, Secret) 점검
+
+아래 세부 내용으로 바로 이동하세요:
+- 프로젝트 개요: 본 문서의 "프로젝트 소개" 섹션
+- 환경변수: "환경 변수 설정"(클라) / 서버 레포의 README(서버)
+- 로컬 기동: "로컬 실행 방법"
+- 기능 구현 가이드: "핵심 기능 구현 가이드"
+- 배포: "배포 가이드 요약 (Vercel + Render)"
+- 점검표/문제해결: "테스트 체크리스트", "트러블슈팅"
 
 ---
 
@@ -1936,7 +1953,7 @@ GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GOOGLE_CALLBACK_URL=https://your-app-name.onrender.com/api/auth/google/callback
 GITHUB_CLIENT_ID=your-github-client-id
-GITHUB_CLIENT_SECRET=your-github-client-secret  
+GITHUB_CLIENT_SECRET=your-github-client-secret
 GITHUB_CALLBACK_URL=https://your-app-name.onrender.com/api/auth/github/callback
 ```
 
