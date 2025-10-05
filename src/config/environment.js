@@ -11,8 +11,8 @@ const getEnvironmentConfig = () => {
     },
     production: {
       // 환경변수에서 URL 가져오기, 없으면 기본값 사용
-      apiUrl: import.meta.env.VITE_API_URL || 'https://your-server-domain.com',
-      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://your-client-domain.com',
+      apiUrl: import.meta.env.VITE_API_URL || 'https://pwd-week6-client.vercel.app/',
+      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://pwd-week6-server.onrender.com',
     }
   };
 
