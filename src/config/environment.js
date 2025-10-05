@@ -12,7 +12,7 @@ const getEnvironmentConfig = () => {
     production: {
       // 배포 후 실제 URL로 변경 필요
       apiUrl: import.meta.env.VITE_API_URL || 'https://pwd-week6-server.onrender.com',
-      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://pwd-week6-client.vercel.app/',
+      clientUrl: import.meta.env.VITE_CLIENT_URL || 'https://pwd-week6-client.vercel.app',
     }
   };
 
