@@ -85,8 +85,6 @@ const ProviderBadge = styled.span`
     switch (props.provider) {
       case 'google':
         return '#db4437';
-      case 'github':
-        return '#333';
       default:
         return '#667eea';
     }
@@ -180,8 +178,6 @@ function DashboardPage() {
     switch (provider) {
       case 'google':
         return '구글';
-      case 'github':
-        return '깃허브';
       case 'local':
         return '이메일';
       default:

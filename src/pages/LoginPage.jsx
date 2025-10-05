@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
-import { FaGoogle, FaGithub, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
@@ -154,12 +154,6 @@ const SocialButton = styled.a`
     }
   }
   
-  &.github {
-    &:hover {
-      border-color: #333;
-      background: #f5f5f5;
-    }
-  }
 `;
 
 const LinkText = styled.div`
@@ -297,10 +291,6 @@ function LoginPage() {
 
       <SocialButton href={authAPIService.getGoogleLoginUrl()} className="google">
         <FaGoogle /> 구글로 로그인
-      </SocialButton>
-
-      <SocialButton href={authAPIService.getGithubLoginUrl()} className="github">
-        <FaGithub /> 깃허브로 로그인
       </SocialButton>
 
       <LinkText>

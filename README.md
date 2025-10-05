@@ -55,7 +55,7 @@
 - **API**: Axios
 - **Authentication**: 
   - JWT/Session based
-  - OAuth (Google, GitHub)
+  - OAuth (Google)
 - **Backend**: Node.js + Express
 - **Database**: MongoDB
 - **Deployment**: Netlify (Frontend) + Railway (Backend)
@@ -1952,9 +1952,6 @@ CLIENT_URL=https://your-app-name.vercel.app
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GOOGLE_CALLBACK_URL=https://your-app-name.onrender.com/api/auth/google/callback
-GITHUB_CLIENT_ID=your-github-client-id
-GITHUB_CLIENT_SECRET=your-github-client-secret
-GITHUB_CALLBACK_URL=https://your-app-name.onrender.com/api/auth/github/callback
 ```
 
 ### Step 3: 배포 확인
@@ -1994,7 +1991,6 @@ NODE_ENV=production
 ```
 CLIENT_URL=https://your-actual-vercel-app.vercel.app
 GOOGLE_CALLBACK_URL=https://your-actual-render-app.onrender.com/api/auth/google/callback
-GITHUB_CALLBACK_URL=https://your-actual-render-app.onrender.com/api/auth/github/callback
 ```
 
 ### Vercel (클라이언트) 환경변수 업데이트:
@@ -2074,7 +2070,7 @@ has been blocked by CORS policy
 **해결**: 서버의 `CLIENT_URL` 환경변수를 클라이언트 도메인으로 설정
 
 ### OAuth 리다이렉트 에러
-**해결**: Google/GitHub 콘솔에서 Callback URL을 배포된 서버 URL로 업데이트
+**해결**: Google 콘솔에서 Callback URL을 배포된 서버 URL로 업데이트
 
 ### 세션 유지 안됨
 **해결**: 
@@ -2236,7 +2232,7 @@ function MyComponent() {
 이제 여러분은:
 - ✨ React로 실제 작동하는 풀스택 웹 서비스를 만들었습니다
 - ✨ 사용자 인증 시스템을 구현할 수 있습니다
-- ✨ OAuth (Google, GitHub) 로그인을 연동할 수 있습니다
+- ✨ OAuth (Google) 로그인을 연동할 수 있습니다
 - ✨ Context API로 전역 상태를 관리할 수 있습니다
 - ✨ 보호된 라우트를 구현할 수 있습니다
 - ✨ Node.js 백엔드와 React 프론트엔드를 연동할 수 있습니다
