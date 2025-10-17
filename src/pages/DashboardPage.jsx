@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import styled from '@emotion/styled';
-import { FaUser, FaEnvelope, FaCrown, FaSignOutAlt, FaCog } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaCrown, FaSignOutAlt, FaCog, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import api from '../services/api';
+import { toast } from 'react-toastify';
 
 const DashboardContainer = styled.div`
   max-width: 800px;
@@ -152,11 +154,101 @@ const LogoutButton = styled.button`
   }
 `;
 
+const EmailVerificationStatus = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: ${props => props.verified ? '#e8f5e9' : '#fff3e0'};
+  color: ${props => props.verified ? '#2e7d32' : '#f57c00'};
+`;
+
+const VerificationAlert = styled.div`
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-left: 4px solid #f57c00;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+`;
+
+const AlertContent = styled.div`
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  flex: 1;
+
+  svg {
+    color: #f57c00;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+`;
+
+const AlertTitle = styled.h3`
+  color: #e65100;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+`;
+
+const AlertMessage = styled.p`
+  color: #ef6c00;
+  font-size: 0.9rem;
+  line-height: 1.5;
+`;
+
+const ResendButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  background: #f57c00;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    background: #ef6c00;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
 function DashboardPage() {
   const { user, logout, isAdmin } = useAuth();
+  const [resending, setResending] = useState(false);
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      setResending(true);
+      const response = await api.post('/api/auth/resend-verification');
+      if (response.data.success) {
+        toast.success('인증 이메일이 재전송되었습니다. 이메일을 확인해주세요.');
+      }
+    } catch (error) {
+      console.error('인증 이메일 재전송 실패:', error);
+      toast.error(error.response?.data?.message || '인증 이메일 재전송에 실패했습니다.');
+    } finally {
+      setResending(false);
+    }
   };
 
   return (
@@ -171,7 +263,38 @@ function DashboardPage() {
           <FaCrown />
           {isAdmin() ? '관리자' : '일반 사용자'}
         </UserTypeBadge>
+
+        {user?.provider === 'local' && (
+          <EmailVerificationStatus verified={user?.emailVerified}>
+            {user?.emailVerified ? (
+              <>
+                <FaCheckCircle /> 이메일 인증 완료
+              </>
+            ) : (
+              <>
+                <FaExclamationCircle /> 이메일 인증 필요
+              </>
+            )}
+          </EmailVerificationStatus>
+        )}
       </Header>
+
+      {user?.provider === 'local' && !user?.emailVerified && (
+        <VerificationAlert>
+          <AlertContent>
+            <FaExclamationCircle />
+            <div>
+              <AlertTitle>이메일 인증이 필요합니다</AlertTitle>
+              <AlertMessage>
+                회원가입 시 발송된 이메일을 확인하여 인증을 완료해주세요.
+              </AlertMessage>
+            </div>
+          </AlertContent>
+          <ResendButton onClick={handleResendVerification} disabled={resending}>
+            {resending ? '전송 중...' : '인증 이메일 재전송'}
+          </ResendButton>
+        </VerificationAlert>
+      )}
 
       <InfoGrid>
         <InfoCard>

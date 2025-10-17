@@ -8,6 +8,7 @@ import { testConnection } from './utils/connectionTest';
 
 // Context
 import { AuthProvider } from './contexts/AuthContext';
+import { SocketProvider } from './contexts/SocketContext';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -20,6 +21,9 @@ import SubmitPage from './pages/SubmitPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import ProfilePage from './pages/ProfilePage';
+import NotificationsPage from './pages/NotificationsPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
 
 // Components
 import Header from './components/Header';
@@ -49,11 +53,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <HashRouter>
-          <GlobalStyles />
-          <div className="app">
-            <Header />
-            <main className="main-content">
+        <SocketProvider>
+          <HashRouter>
+            <GlobalStyles />
+            <div className="app">
+              <Header />
+              <main className="main-content">
               <Routes>
                 {/* 공개 라우트 */}
                 <Route path="/" element={<HomePage />} />
@@ -62,6 +67,7 @@ function App() {
                 <Route path="/popular" element={<PopularPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
                 
                 {/* 보호된 라우트 (로그인 필요) */}
                 <Route 
@@ -69,6 +75,22 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <DashboardPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/profile" 
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/notifications" 
+                  element={
+                    <ProtectedRoute>
+                      <NotificationsPage />
                     </ProtectedRoute>
                   } 
                 />
@@ -117,7 +139,8 @@ function App() {
             pauseOnHover
             theme="light"
           />
-        </HashRouter>
+          </HashRouter>
+        </SocketProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

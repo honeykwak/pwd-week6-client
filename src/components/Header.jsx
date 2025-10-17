@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { FaHome, FaList, FaFire, FaPlus, FaUser, FaSignInAlt, FaUserPlus, FaSignOutAlt, FaUserShield, FaClipboardList } from 'react-icons/fa';
+import { FaHome, FaList, FaFire, FaPlus, FaUser, FaSignInAlt, FaUserPlus, FaSignOutAlt, FaUserShield, FaClipboardList, FaBell } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
+import { useSocket } from '../contexts/SocketContext';
 
 const HeaderContainer = styled.header`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -100,9 +101,44 @@ const LogoutButton = styled.button`
   }
 `;
 
+const NotificationLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: background 0.3s;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  &.active {
+    background: rgba(255, 255, 255, 0.3);
+  }
+`;
+
+const NotificationBadge = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ff4444;
+  color: white;
+  border-radius: 10px;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  text-align: center;
+  line-height: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+
 function Header() {
   const location = useLocation();
   const { user, isAuthenticated, logout, loading } = useAuth();
+  const { unreadCount } = useSocket();
 
   const isActive = (path) => {
     if (path === '/' && location.pathname === '/') return 'active';
@@ -162,6 +198,13 @@ function Header() {
                 <NavLink to="/dashboard" className={isActive('/dashboard')}>
                   <FaUser /> 대시보드
                 </NavLink>
+                <NavLink to="/profile" className={isActive('/profile')}>
+                  <FaUser /> 프로필
+                </NavLink>
+                <NotificationLink to="/notifications" className={isActive('/notifications')}>
+                  <FaBell />
+                  {unreadCount > 0 && <NotificationBadge>{unreadCount > 99 ? '99+' : unreadCount}</NotificationBadge>}
+                </NotificationLink>
                 <LogoutButton onClick={handleLogout}>
                   <FaSignOutAlt /> 로그아웃
                 </LogoutButton>
