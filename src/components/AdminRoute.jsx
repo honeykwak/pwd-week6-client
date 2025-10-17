@@ -34,13 +34,7 @@ const AccessDeniedMessage = styled.p`
 `;
 
 const AdminRoute = ({ children }) => {
-  const { isAuthenticated, isLoading, isAdmin, user } = useAuth();
-  
-  // 디버깅
-  console.log('🔐 AdminRoute - isAuthenticated:', isAuthenticated);
-  console.log('🔐 AdminRoute - isLoading:', isLoading);
-  console.log('🔐 AdminRoute - user:', user);
-  console.log('🔐 AdminRoute - isAdmin():', isAdmin());
+  const { isAuthenticated, isLoading, isAdmin } = useAuth();
 
   // 로딩 중일 때
   if (isLoading) {

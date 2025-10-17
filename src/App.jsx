@@ -26,7 +26,6 @@ import Header from './components/Header';
 import NotFound from './components/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
-import PublicOnlyRoute from './components/PublicOnlyRoute';
 
 // Styles
 import GlobalStyles from './styles/GlobalStyles';
@@ -61,24 +60,8 @@ function App() {
                 <Route path="/list" element={<ListPage />} />
                 <Route path="/restaurant/:id" element={<DetailPage />} />
                 <Route path="/popular" element={<PopularPage />} />
-                
-                {/* 공개 전용 라우트 (로그인 시 접근 불가) */}
-                <Route 
-                  path="/login" 
-                  element={
-                    <PublicOnlyRoute>
-                      <LoginPage />
-                    </PublicOnlyRoute>
-                  } 
-                />
-                <Route 
-                  path="/register" 
-                  element={
-                    <PublicOnlyRoute>
-                      <RegisterPage />
-                    </PublicOnlyRoute>
-                  } 
-                />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
                 
                 {/* 보호된 라우트 (로그인 필요) */}
                 <Route 
