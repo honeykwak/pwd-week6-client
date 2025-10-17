@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { restaurantAPI } from '../services/api';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { authAPIService } from '../services/authApi';
+import { authApi } from '../services/authApi';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -138,7 +138,7 @@ function AdminPage() {
 
   const { data: usersData, isLoading: usersLoading, error: usersError } = useQuery({
     queryKey: ['users'],
-    queryFn: authAPIService.getAllUsers,
+    queryFn: authApi.admin.getUsers,
     enabled: activeTab === 'users',
     retry: 1,
   });
@@ -181,7 +181,7 @@ function AdminPage() {
   });
 
   const changeUserTypeMutation = useMutation({
-    mutationFn: ({ userId, userType }) => authAPIService.changeUserType(userId, userType),
+    mutationFn: ({ userId, userType }) => authApi.admin.updateUserType(userId, userType),
     onSuccess: () => {
       toast.success('사용자 유형이 변경되었습니다.');
       queryClient.invalidateQueries({ queryKey: ['users'] });

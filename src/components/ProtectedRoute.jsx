@@ -24,34 +24,27 @@ const LoadingText = styled.p`
  * @param {React.ReactNode} props.children - 보호할 컴포넌트
  * @param {string} props.redirectTo - 로그인되지 않은 경우 리다이렉트할 경로 (기본: '/login')
  */
-function ProtectedRoute({ children, redirectTo = '/login' }) {
-  const { isAuthenticated, loading } = useAuth();
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
-  // 인증 상태를 확인하는 중
-  if (loading) {
+  // 로딩 중일 때
+  if (isLoading) {
     return (
       <LoadingContainer>
         <ClipLoader color="#667eea" size={50} />
-        <LoadingText>로그인 상태를 확인하는 중...</LoadingText>
+        <LoadingText>인증 상태를 확인하는 중...</LoadingText>
       </LoadingContainer>
     );
   }
 
-  // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
-  // 현재 위치를 state로 전달하여 로그인 후 원래 페이지로 돌아올 수 있도록 함
+  // 인증되지 않은 경우 로그인 페이지로 리다이렉트
   if (!isAuthenticated) {
-    return (
-      <Navigate 
-        to={redirectTo} 
-        state={{ from: location }} 
-        replace 
-      />
-    );
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // 로그인된 경우 보호된 컴포넌트 렌더링
+  // 인증된 경우 자식 컴포넌트 렌더링
   return children;
-}
+};
 
 export default ProtectedRoute;

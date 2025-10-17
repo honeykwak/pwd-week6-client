@@ -1,19 +1,9 @@
 import axios from 'axios';
-import { apiUrl } from '../config/environment';
-
-// 서버 URL 설정 (환경별 자동 감지)
-const API_BASE_URL = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+import { environment } from '../config/environment';
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: environment.API_URL,
   withCredentials: true, // 쿠키/세션을 포함하여 요청
-  timeout: 10000,
-});
-
-// 공개 조회 전용 인스턴스: 교차 출처 시 자격증명(쿠키) 제외
-const publicApi = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: false,
   timeout: 10000,
 });
 
@@ -40,7 +30,7 @@ api.interceptors.response.use(
 
 export const restaurantAPI = {
   getRestaurants: async () => {
-    const response = await publicApi.get('/api/restaurants', { withCredentials: false });
+    const response = await api.get('/api/restaurants', { withCredentials: false });
     return response.data;
   },
 
@@ -60,12 +50,12 @@ export const restaurantAPI = {
   },
 
   getRestaurantById: async (id) => {
-    const response = await publicApi.get(`/api/restaurants/${id}`, { withCredentials: false });
+    const response = await api.get(`/api/restaurants/${id}`, { withCredentials: false });
     return response.data;
   },
 
   getPopularRestaurants: async () => {
-    const response = await publicApi.get('/api/restaurants/popular', { withCredentials: false });
+    const response = await api.get('/api/restaurants/popular', { withCredentials: false });
     return response.data;
   },
 };
