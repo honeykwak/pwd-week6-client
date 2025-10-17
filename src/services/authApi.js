@@ -54,18 +54,6 @@ export const authApi = {
   getCurrentUser: () => 
     authApiInstance.get('/me'),
 
-  // Google OAuth 로그인 URL 생성
-  getGoogleAuthUrl: () => 
-    authApiInstance.get('/google/url'),
-
-  // Naver OAuth 로그인 URL 생성
-  getNaverAuthUrl: () => 
-    authApiInstance.get('/naver/url'),
-
-  // OAuth 콜백 처리
-  handleOAuthCallback: (provider, code) => 
-    authApiInstance.post(`/${provider}/callback`, { code }),
-
   // 관리자 전용 API
   admin: {
     // 모든 사용자 목록 조회
