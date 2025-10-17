@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { FaHome, FaList, FaFire, FaPlus, FaUser, FaSignInAlt, FaUserPlus, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaList, FaFire, FaPlus, FaUser, FaSignInAlt, FaUserPlus, FaSignOutAlt, FaUserShield, FaClipboardList } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 
 const HeaderContainer = styled.header`
@@ -130,9 +130,21 @@ function Header() {
               <FaFire /> 인기 맛집
             </NavLink>
             {isAuthenticated && (
-              <NavLink to="/submit" className={isActive('/submit')}>
-                <FaPlus /> 맛집 제보
-              </NavLink>
+              <>
+                <NavLink to="/submit" className={isActive('/submit')}>
+                  <FaPlus /> 맛집 제보
+                </NavLink>
+                {user && user.userType === 'admin' && (
+                  <>
+                    <NavLink to="/admin" className={isActive('/admin')}>
+                      <FaUserShield /> 관리자
+                    </NavLink>
+                    <NavLink to="/submissions" className={isActive('/submissions')}>
+                      <FaClipboardList /> 제보 관리
+                    </NavLink>
+                  </>
+                )}
+              </>
             )}
           </Nav>
 
