@@ -22,6 +22,8 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       const response = await authApi.getCurrentUser();
       if (response.data.success) {
+        console.log('🔐 인증된 사용자:', response.data.user);
+        console.log('📋 사용자 타입:', response.data.user.userType);
         setUser(response.data.user);
         setIsAuthenticated(true);
       } else {

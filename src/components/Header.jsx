@@ -102,7 +102,16 @@ const LogoutButton = styled.button`
 
 function Header() {
   const location = useLocation();
-  const { user, isAuthenticated, logout, loading } = useAuth();
+  const { user, isAuthenticated, logout, loading, isAdmin } = useAuth();
+  
+  // 디버깅: user 정보 확인
+  React.useEffect(() => {
+    if (user) {
+      console.log('🔍 Header - Current User:', user);
+      console.log('🔍 Header - Is Admin?:', isAdmin());
+      console.log('🔍 Header - User Type:', user.userType);
+    }
+  }, [user]);
 
   const isActive = (path) => {
     if (path === '/' && location.pathname === '/') return 'active';
