@@ -18,7 +18,7 @@ const NotificationsPage = () => {
   const fetchNotifications = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/notifications', {
+      const response = await api.get('/api/notifications', {
         params: { unreadOnly: filter === 'unread' },
       });
 
@@ -41,7 +41,7 @@ const NotificationsPage = () => {
   // 알림 읽음 처리
   const handleMarkAsRead = async (notificationId) => {
     try {
-      await api.put(`/notifications/${notificationId}/read`);
+      await api.put(`/api/notifications/${notificationId}/read`);
       fetchNotifications();
       toast.success('알림을 읽음 처리했습니다.');
     } catch (error) {
@@ -53,7 +53,7 @@ const NotificationsPage = () => {
   // 모든 알림 읽음 처리
   const handleMarkAllAsRead = async () => {
     try {
-      await api.put('/notifications/read-all');
+      await api.put('/api/notifications/read-all');
       fetchNotifications();
       setUnreadCount(0);
       toast.success('모든 알림을 읽음 처리했습니다.');
@@ -68,7 +68,7 @@ const NotificationsPage = () => {
     if (!window.confirm('이 알림을 삭제하시겠습니까?')) return;
 
     try {
-      await api.delete(`/notifications/${notificationId}`);
+      await api.delete(`/api/notifications/${notificationId}`);
       fetchNotifications();
       toast.success('알림이 삭제되었습니다.');
     } catch (error) {
