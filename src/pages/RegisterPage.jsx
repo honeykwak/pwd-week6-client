@@ -174,13 +174,20 @@ function RegisterPage() {
     try {
       const result = await registerUser(data.name, data.email, data.password);
       if (result.success) {
-        toast.success('회원가입 성공!');
+        // 서버에서 보낸 메시지를 표시 (이메일 발송 상태 포함)
+        const message = result.message || '회원가입이 완료되었습니다!';
+        if (message.includes('인증 이메일 발송 실패')) {
+          toast.warning(message, { autoClose: 5000 });
+        } else {
+          toast.success(message);
+        }
         navigate('/dashboard');
       } else {
         toast.error(result.message || '회원가입에 실패했습니다.');
       }
     } catch (error) {
-      toast.error('회원가입 중 오류가 발생했습니다.');
+      console.error('Register error:', error);
+      toast.error(error.response?.data?.message || '회원가입 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }

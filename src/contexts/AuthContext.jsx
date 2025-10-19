@@ -60,12 +60,15 @@ export const AuthProvider = ({ children }) => {
       if (response.data.success) {
         setUser(response.data.data.user);
         setIsAuthenticated(true);
-        return { success: true };
+        return { success: true, message: response.data.message };
       } else {
         return { success: false, message: response.data.message };
       }
     } catch (error) {
-      return { success: false, message: '회원가입 중 오류가 발생했습니다.' };
+      console.error('Register error:', error);
+      // 서버에서 보낸 에러 메시지 우선 사용
+      const message = error.response?.data?.message || '회원가입 중 오류가 발생했습니다.';
+      return { success: false, message };
     }
   };
 
