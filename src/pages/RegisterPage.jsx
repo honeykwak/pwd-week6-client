@@ -193,13 +193,14 @@ function RegisterPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const response = await authApi.getGoogleAuthUrl();
-      window.location.href = response.data.url;
-    } catch (error) {
-      toast.error('Google 로그인 설정에 문제가 있습니다.');
-    }
+  const handleGoogleLogin = () => {
+    // Google OAuth는 서버로 직접 리디렉트
+    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+  };
+
+  const handleNaverLogin = () => {
+    // Naver OAuth는 서버로 직접 리디렉트
+    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/naver`;
   };
 
   return (
@@ -309,6 +310,11 @@ function RegisterPage() {
         <SocialButton type="button" onClick={handleGoogleLogin}>
           <FaGoogle color="#4285F4" />
           Google로 회원가입
+        </SocialButton>
+        
+        <SocialButton type="button" onClick={handleNaverLogin}>
+          <span style={{ color: '#03C75A', fontWeight: 'bold' }}>N</span>
+          Naver로 회원가입
         </SocialButton>
       </SocialLoginContainer>
 
