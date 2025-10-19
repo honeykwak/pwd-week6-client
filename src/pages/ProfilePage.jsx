@@ -33,7 +33,7 @@ const ProfilePage = () => {
     setMessage({ type: '', text: '' });
 
     try {
-      const response = await api.post('/users/avatar', formData, {
+      const response = await api.post('/api/users/avatar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -66,7 +66,7 @@ const ProfilePage = () => {
     setMessage({ type: '', text: '' });
 
     try {
-      const response = await api.delete('/users/avatar');
+      const response = await api.delete('/api/users/avatar');
 
       if (response.data.success) {
         setUser(response.data.data.user);
